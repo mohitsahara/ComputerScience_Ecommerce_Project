@@ -1,0 +1,316 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}TechMart — Premium Smartphones, Smartwatches & Electronics{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center py-5">
+      <div class="col-lg-6 hero-content">
+        <div class="hero-badge"><i class="bi bi-lightning-fill me-1"></i> New 2026 Collection</div>
+        <h1 class="hero-title">
+          Discover the<br>
+          Future of <span class="highlight">Tech</span>
+        </h1>
+        <p class="hero-subtitle">
+          Shop the latest smartphones, smartwatches, and premium electronics.<br>
+          Unbeatable prices. Fast delivery. Trusted quality.
+        </p>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="{% url 'product_list' %}" class="btn-primary-custom">
+            <i class="bi bi-grid"></i> Shop Now
+          </a>
+          <a href="{% url 'category_products' 'smartphones' %}" class="btn-outline-custom">
+            <i class="bi bi-phone"></i> View Phones
+          </a>
+        </div>
+        <div class="d-flex gap-4 mt-4">
+          <div>
+            <div class="fw-800 text-white fs-5">500+</div>
+            <div style="color:rgba(255,255,255,.6);font-size:.82rem">Products</div>
+          </div>
+          <div style="width:1px;background:rgba(255,255,255,.15)"></div>
+          <div>
+            <div class="fw-800 text-white fs-5">50K+</div>
+            <div style="color:rgba(255,255,255,.6);font-size:.82rem">Customers</div>
+          </div>
+          <div style="width:1px;background:rgba(255,255,255,.15)"></div>
+          <div>
+            <div class="fw-800 text-white fs-5">4.9★</div>
+            <div style="color:rgba(255,255,255,.6);font-size:.82rem">Rating</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 hero-image-wrapper">
+        <img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=700&auto=format&fit=crop" alt="iPhone 15 Pro">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="section-header d-flex justify-content-between align-items-end">
+      <div>
+        <div class="section-badge">Browse</div>
+        <h2 class="section-title">Shop by <span>Category</span></h2>
+      </div>
+      <a href="{% url 'product_list' %}" class="btn btn-outline-primary rounded-pill d-none d-md-flex align-items-center gap-2">View All <i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="row g-3">
+      {% for cat in categories %}
+      <div class="col-6 col-md-4 col-lg-{% if forloop.counter <= 2 %}4{% else %}4{% endif %}">
+        <a href="{% url 'category_products' cat.slug %}" class="category-card">
+          <img src="{{ cat.image_url|default:'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=600&auto=format&fit=crop' }}" alt="{{ cat.name }}">
+          <div class="category-card-overlay">
+            <p class="category-card-title">{{ cat.name }}</p>
+            <p class="category-card-count">{{ cat.products.count }} products</p>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Featured Products -->
+{% if featured_products %}
+<section class="py-5 bg-light-custom">
+  <div class="container">
+    <div class="section-header d-flex justify-content-between align-items-end">
+      <div>
+        <div class="section-badge">Handpicked</div>
+        <h2 class="section-title">Featured <span>Products</span></h2>
+      </div>
+      <a href="{% url 'product_list' %}" class="btn btn-outline-primary rounded-pill d-none d-md-flex align-items-center gap-2">See All <i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="row g-3">
+      {% for product in featured_products %}
+      <div class="col-6 col-md-4 col-lg-3">
+        {% include 'products/_product_card.html' %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Flash Deals Banner -->
+<section class="flash-deal-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-5 mb-4 mb-lg-0">
+        <div class="hero-badge mb-3"><i class="bi bi-lightning-fill me-1"></i> Limited Time</div>
+        <h2 class="text-white fw-800 fs-1 mb-2" style="letter-spacing:-.5px">Flash Deals<br><span style="color:#f59e0b">Up to 30% Off</span></h2>
+        <p class="text-white-50 mb-4">Incredible discounts on top smartphones and smartwatches. Hurry — these deals won't last!</p>
+        <div class="mb-4">
+          <p class="text-white-50 mb-2" style="font-size:.85rem;letter-spacing:1px;text-transform:uppercase">Ends in:</p>
+          <div class="deal-timer" id="deal-timer">
+            <div class="timer-block"><div class="timer-number" id="timer-h">08</div><div class="timer-label">Hours</div></div>
+            <div class="separator">:</div>
+            <div class="timer-block"><div class="timer-number" id="timer-m">23</div><div class="timer-label">Mins</div></div>
+            <div class="separator">:</div>
+            <div class="timer-block"><div class="timer-number" id="timer-s">45</div><div class="timer-label">Secs</div></div>
+          </div>
+        </div>
+        <a href="{% url 'product_list' %}?sort=price_asc" class="btn-primary-custom">
+          <i class="bi bi-lightning"></i> Grab Deals
+        </a>
+      </div>
+      <div class="col-lg-7">
+        <div class="row g-3">
+          {% for product in on_sale|slice:":4" %}
+          <div class="col-6">
+            <div class="product-card" style="background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1)">
+              <div class="product-card-image-wrapper" style="background:rgba(255,255,255,.08)">
+                <a href="{{ product.get_absolute_url }}">
+                  <img src="{{ product.get_image }}" alt="{{ product.name }}" loading="lazy">
+                </a>
+                {% if product.discount_percentage > 0 %}
+                <span class="badge-sale">-{{ product.discount_percentage }}%</span>
+                {% endif %}
+              </div>
+              <div class="product-card-body">
+                <p class="product-title" style="color:#fff"><a href="{{ product.get_absolute_url }}" style="color:#fff">{{ product.name }}</a></p>
+                <div class="product-price-wrap">
+                  <span class="product-price product-price-sale">£{{ product.effective_price }}</span>
+                  {% if product.discount_price %}
+                  <span class="product-price-original">£{{ product.price }}</span>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Phones Section -->
+{% if phones %}
+<section class="py-5">
+  <div class="container">
+    <div class="section-header d-flex justify-content-between align-items-end">
+      <div>
+        <div class="section-badge">Latest</div>
+        <h2 class="section-title">Top <span>Smartphones</span></h2>
+      </div>
+      <a href="{% url 'category_products' 'smartphones' %}" class="btn btn-outline-primary rounded-pill d-none d-md-flex align-items-center gap-2">View All <i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="row g-3">
+      {% for product in phones %}
+      <div class="col-6 col-md-4 col-lg-3">
+        {% include 'products/_product_card.html' %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Split Banner -->
+<section class="py-5 bg-light-custom">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="rounded-3 overflow-hidden position-relative" style="height:220px">
+          <img src="https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=800&auto=format&fit=crop" class="w-100 h-100" style="object-fit:cover" alt="Smartwatches">
+          <div class="position-absolute inset-0 d-flex flex-column justify-content-end p-4" style="background:linear-gradient(to top, rgba(15,23,42,.8) 0%, transparent 60%)">
+            <h4 class="text-white fw-700 mb-1">Premium Smartwatches</h4>
+            <p class="text-white-50 mb-2" style="font-size:.88rem">Apple, Samsung, Garmin & more</p>
+            <a href="{% url 'category_products' 'smartwatches' %}" class="btn btn-light btn-sm rounded-pill px-3">Shop Watches</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="rounded-3 overflow-hidden position-relative" style="height:220px">
+          <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800&auto=format&fit=crop" class="w-100 h-100" style="object-fit:cover" alt="Laptops">
+          <div class="position-absolute inset-0 d-flex flex-column justify-content-end p-4" style="background:linear-gradient(to top, rgba(15,23,42,.8) 0%, transparent 60%)">
+            <h4 class="text-white fw-700 mb-1">Powerful Laptops</h4>
+            <p class="text-white-50 mb-2" style="font-size:.88rem">MacBook, Surface & ultrabooks</p>
+            <a href="{% url 'category_products' 'laptops' %}" class="btn btn-light btn-sm rounded-pill px-3">Shop Laptops</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Watches Section -->
+{% if watches %}
+<section class="py-5">
+  <div class="container">
+    <div class="section-header d-flex justify-content-between align-items-end">
+      <div>
+        <div class="section-badge">Trending</div>
+        <h2 class="section-title">Smart<span>watches</span></h2>
+      </div>
+      <a href="{% url 'category_products' 'smartwatches' %}" class="btn btn-outline-primary rounded-pill d-none d-md-flex align-items-center gap-2">View All <i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="row g-3">
+      {% for product in watches %}
+      <div class="col-6 col-md-4 col-lg-3">
+        {% include 'products/_product_card.html' %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- New Arrivals -->
+<section class="py-5 bg-light-custom">
+  <div class="container">
+    <div class="section-header d-flex justify-content-between align-items-end">
+      <div>
+        <div class="section-badge">Just In</div>
+        <h2 class="section-title">New <span>Arrivals</span></h2>
+      </div>
+      <a href="{% url 'product_list' %}?sort=newest" class="btn btn-outline-primary rounded-pill d-none d-md-flex align-items-center gap-2">See All <i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="row g-3">
+      {% for product in new_arrivals %}
+      <div class="col-6 col-md-4 col-lg-3">
+        {% include 'products/_product_card.html' %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="py-5">
+  <div class="container">
+    <div class="text-center section-header">
+      <div class="section-badge">Reviews</div>
+      <h2 class="section-title">What Our <span>Customers Say</span></h2>
+    </div>
+    <div class="row g-4">
+      {% for t in testimonials %}
+      <div class="col-md-4">
+        <div class="review-card">
+          <div class="review-stars mb-2">★★★★★</div>
+          <p class="text-dark mb-3">{{ t.text }}</p>
+          <div class="d-flex align-items-center gap-2">
+            <img src="{{ t.avatar }}" width="40" height="40" class="rounded-circle" style="object-fit:cover" alt="{{ t.name }}">
+            <div>
+              <p class="mb-0 fw-600" style="font-size:.9rem">{{ t.name }}</p>
+              <p class="mb-0 text-muted" style="font-size:.78rem">{{ t.product }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      {% with testimonials_data="James Wilson,Sarah Chen,Mohammed Al-Rashid" %}
+      <div class="col-md-4">
+        <div class="review-card">
+          <div class="review-stars mb-2">★★★★★</div>
+          <p class="text-dark mb-3">"Absolutely love my new iPhone 15 Pro Max from TechMart. Delivered next day, perfectly packaged. Best price I could find online!"</p>
+          <div class="d-flex align-items-center gap-2">
+            <img src="https://ui-avatars.com/api/?name=James+Wilson&background=2563eb&color=fff&size=40" width="40" height="40" class="rounded-circle" alt="James Wilson">
+            <div>
+              <p class="mb-0 fw-600" style="font-size:.9rem">James Wilson</p>
+              <p class="mb-0 text-muted" style="font-size:.78rem">Bought iPhone 15 Pro Max</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="review-card">
+          <div class="review-stars mb-2">★★★★★</div>
+          <p class="text-dark mb-3">"The Apple Watch Series 9 is incredible. Great deal with the WELCOME20 discount code. Arrived in 2 days — impressed with TechMart service!"</p>
+          <div class="d-flex align-items-center gap-2">
+            <img src="https://ui-avatars.com/api/?name=Sarah+Chen&background=10b981&color=fff&size=40" width="40" height="40" class="rounded-circle" alt="Sarah Chen">
+            <div>
+              <p class="mb-0 fw-600" style="font-size:.9rem">Sarah Chen</p>
+              <p class="mb-0 text-muted" style="font-size:.78rem">Bought Apple Watch Series 9</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="review-card">
+          <div class="review-stars mb-2">★★★★☆</div>
+          <p class="text-dark mb-3">"Samsung Galaxy S24 Ultra exceeded my expectations. The 200MP camera is jaw-dropping. TechMart had the best price plus free shipping. Highly recommend!"</p>
+          <div class="d-flex align-items-center gap-2">
+            <img src="https://ui-avatars.com/api/?name=Mohammed+Al&background=f59e0b&color=fff&size=40" width="40" height="40" class="rounded-circle" alt="Mohammed">
+            <div>
+              <p class="mb-0 fw-600" style="font-size:.9rem">Mohammed Al-Rashid</p>
+              <p class="mb-0 text-muted" style="font-size:.78rem">Bought Samsung Galaxy S24 Ultra</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endwith %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}
