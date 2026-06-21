@@ -1,0 +1,302 @@
+{% extends 'base.html' %}
+{% block title %}Help Centre — TechMart{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div class="container page-header-content">
+    <h1 class="fw-800 mb-1">Help Centre</h1>
+    <div class="breadcrumb-custom">
+      <a href="{% url 'home' %}">Home</a><span>/</span>
+      <span class="current">Help Centre</span>
+    </div>
+  </div>
+</div>
+
+<div class="container py-5">
+
+  <!-- Tab Navigation -->
+  <ul class="nav nav-pills justify-content-center mb-5 gap-2" id="helpTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active px-4 py-2 rounded-pill fw-600" id="faq-tab"
+        data-bs-toggle="pill" data-bs-target="#faq" type="button">
+        <i class="bi bi-question-circle me-2"></i>FAQ
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link px-4 py-2 rounded-pill fw-600" id="shipping-tab"
+        data-bs-toggle="pill" data-bs-target="#shipping" type="button">
+        <i class="bi bi-truck me-2"></i>Shipping Policy
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link px-4 py-2 rounded-pill fw-600" id="returns-tab"
+        data-bs-toggle="pill" data-bs-target="#returns" type="button">
+        <i class="bi bi-arrow-return-left me-2"></i>Returns
+      </button>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="helpTabContent">
+
+    <!-- ══════════ FAQ ══════════ -->
+    <div class="tab-pane fade show active" id="faq" role="tabpanel">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <h2 class="fw-700 mb-4 text-center">Frequently Asked Questions</h2>
+          <div class="accordion" id="faqAccordion">
+
+            <div class="accordion-item border-0 mb-3 rounded-3 shadow-sm">
+              <h2 class="accordion-header">
+                <button class="accordion-button rounded-3 fw-600" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#faq1">
+                  How do I place an order on TechMart?
+                </button>
+              </h2>
+              <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                  Browse our catalogue, add items to your cart, and proceed to checkout. You will need a registered account to complete your purchase. The whole process takes under two minutes.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item border-0 mb-3 rounded-3 shadow-sm">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed rounded-3 fw-600" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#faq2">
+                  What payment methods do you accept?
+                </button>
+              </h2>
+              <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                  We accept Credit/Debit Cards (Visa, Mastercard), PayPal, Bank Transfer, and Cash on Delivery. All card payments are processed securely via Stripe with SSL encryption.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item border-0 mb-3 rounded-3 shadow-sm">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed rounded-3 fw-600" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#faq3">
+                  Can I use a discount / coupon code?
+                </button>
+              </h2>
+              <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                  Yes! Enter your promo code in the "Promo Code" box on the cart page and click Apply. Current active codes include <strong>WELCOME20</strong> (20% off), <strong>TECHMART10</strong> (10% off), and <strong>SAVE15</strong> (15% off). Codes are subject to expiry and usage limits.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item border-0 mb-3 rounded-3 shadow-sm">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed rounded-3 fw-600" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#faq4">
+                  How do I track my order?
+                </button>
+              </h2>
+              <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                  Log into your account and visit <strong>My Orders</strong> from your profile menu. Each order displays a live status tracker showing whether your order is Pending, Confirmed, Processing, Shipped, or Delivered.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item border-0 mb-3 rounded-3 shadow-sm">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed rounded-3 fw-600" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#faq5">
+                  Is my personal data safe?
+                </button>
+              </h2>
+              <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                  Absolutely. Passwords are stored as PBKDF2-SHA256 hashes — never in plain text. All connections are SSL encrypted. We comply with the UK GDPR and Data Protection Act 2018. We never sell your data to third parties.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item border-0 mb-3 rounded-3 shadow-sm">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed rounded-3 fw-600" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#faq6">
+                  Do products come with a warranty?
+                </button>
+              </h2>
+              <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                  All products sold on TechMart are brand new and covered by the manufacturer's standard warranty. Apple products carry a 1-year warranty; Samsung products carry a 2-year warranty in the UK. Extended warranty options are available at checkout.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item border-0 mb-3 rounded-3 shadow-sm">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed rounded-3 fw-600" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#faq7">
+                  Can I cancel or change my order?
+                </button>
+              </h2>
+              <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                  Orders can be cancelled within 1 hour of placement provided they have not yet been dispatched. Please use the Contact Us page immediately if you need to amend or cancel an order.
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /accordion -->
+        </div>
+      </div>
+    </div><!-- /faq -->
+
+    <!-- ══════════ SHIPPING POLICY ══════════ -->
+    <div class="tab-pane fade" id="shipping" role="tabpanel">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <h2 class="fw-700 mb-4 text-center">Shipping Policy</h2>
+
+          <!-- Free Shipping Banner -->
+          <div class="alert d-flex align-items-center gap-3 mb-4"
+               style="background:#e8f5e9;border:1px solid #a5d6a7;border-radius:12px">
+            <i class="bi bi-truck fs-2 text-success"></i>
+            <div>
+              <strong class="text-success">Free Standard Shipping</strong> on all orders over <strong>£50</strong>.<br>
+              <span class="text-muted small">Orders below £50 are charged a flat £4.99 delivery fee.</span>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm rounded-3 mb-4">
+            <div class="card-body p-4">
+              <h5 class="fw-700 mb-3"><i class="bi bi-clock me-2 text-primary"></i>Delivery Timeframes</h5>
+              <table class="table table-borderless mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Service</th>
+                    <th>Estimated Delivery</th>
+                    <th>Cost</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Standard Delivery</strong></td>
+                    <td>3–5 working days</td>
+                    <td>£4.99 (Free over £50)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Express Delivery</strong></td>
+                    <td>1–2 working days</td>
+                    <td>£9.99</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Next Day Delivery</strong></td>
+                    <td>Next working day (order by 2pm)</td>
+                    <td>£14.99</td>
+                  </tr>
+                  <tr>
+                    <td><strong>International (EU)</strong></td>
+                    <td>5–10 working days</td>
+                    <td>£19.99</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm rounded-3 mb-4">
+            <div class="card-body p-4">
+              <h5 class="fw-700 mb-3"><i class="bi bi-info-circle me-2 text-primary"></i>Important Information</h5>
+              <ul class="text-muted ps-3">
+                <li class="mb-2">All orders are dispatched from our UK warehouse within <strong>1 business day</strong> of order confirmation.</li>
+                <li class="mb-2">A tracking number will be sent to your registered email address once your order has been dispatched.</li>
+                <li class="mb-2">Deliveries are made Monday–Friday, 8am–6pm. A signature may be required for high-value items.</li>
+                <li class="mb-2">If you are not home at the time of delivery, the courier will leave a calling card with redelivery instructions.</li>
+                <li class="mb-2">TechMart is not responsible for delays caused by customs clearance for international shipments.</li>
+                <li class="mb-2">Remote area surcharges may apply for deliveries to the Scottish Highlands, Northern Ireland, and islands.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-body p-4">
+              <h5 class="fw-700 mb-3"><i class="bi bi-box-seam me-2 text-primary"></i>Packaging</h5>
+              <p class="text-muted mb-0">All items are carefully packed in protective, branded TechMart packaging. High-value electronics are double-boxed with foam inserts. We use eco-friendly recyclable materials wherever possible.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /shipping -->
+
+    <!-- ══════════ RETURNS ══════════ -->
+    <div class="tab-pane fade" id="returns" role="tabpanel">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <h2 class="fw-700 mb-4 text-center">Returns &amp; Refunds Policy</h2>
+
+          <!-- 30-day badge -->
+          <div class="text-center mb-4">
+            <div class="d-inline-flex align-items-center gap-3 px-4 py-3 rounded-3"
+                 style="background:#e3f2fd;border:1px solid #90caf9">
+              <i class="bi bi-arrow-return-left fs-1 text-primary"></i>
+              <div class="text-start">
+                <div class="fw-700 fs-5 text-primary">30-Day Hassle-Free Returns</div>
+                <div class="text-muted small">Change your mind? No problem.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm rounded-3 mb-4">
+            <div class="card-body p-4">
+              <h5 class="fw-700 mb-3"><i class="bi bi-check-circle me-2 text-success"></i>What Can Be Returned</h5>
+              <ul class="text-muted ps-3">
+                <li class="mb-2">Items returned within <strong>30 days</strong> of the delivery date.</li>
+                <li class="mb-2">Products in their <strong>original, unopened packaging</strong> with all accessories and documentation included.</li>
+                <li class="mb-2">Faulty or damaged items (even if opened) — please contact us within <strong>48 hours</strong> of receipt.</li>
+                <li class="mb-2">Items that do not match the product description on our website.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm rounded-3 mb-4">
+            <div class="card-body p-4">
+              <h5 class="fw-700 mb-3"><i class="bi bi-x-circle me-2 text-danger"></i>What Cannot Be Returned</h5>
+              <ul class="text-muted ps-3">
+                <li class="mb-2">Items that have been opened and used (unless faulty).</li>
+                <li class="mb-2">Products with broken seals on software or digital content.</li>
+                <li class="mb-2">Custom or personalised orders.</li>
+                <li class="mb-2">Items returned after the 30-day window.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm rounded-3 mb-4">
+            <div class="card-body p-4">
+              <h5 class="fw-700 mb-3"><i class="bi bi-list-ol me-2 text-primary"></i>How to Return an Item</h5>
+              <ol class="text-muted ps-3">
+                <li class="mb-2">Contact our support team via the <a href="{% url 'contact_page' %}" class="text-primary fw-600">Contact Us</a> page with your order number and reason for return.</li>
+                <li class="mb-2">We will email you a pre-paid return shipping label within 1 business day.</li>
+                <li class="mb-2">Pack the item securely in its original packaging and attach the label.</li>
+                <li class="mb-2">Drop the parcel at your nearest post office or courier collection point.</li>
+                <li class="mb-2">Once we receive and inspect the item, your refund will be processed within <strong>3–5 business days</strong>.</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm rounded-3">
+            <div class="card-body p-4">
+              <h5 class="fw-700 mb-3"><i class="bi bi-credit-card me-2 text-primary"></i>Refunds</h5>
+              <p class="text-muted mb-2">Approved refunds are credited back to your original payment method:</p>
+              <ul class="text-muted ps-3 mb-0">
+                <li class="mb-2"><strong>Card payments:</strong> 3–5 business days after approval.</li>
+                <li class="mb-2"><strong>PayPal:</strong> 1–2 business days after approval.</li>
+                <li class="mb-2"><strong>Bank Transfer:</strong> 5–7 business days after approval.</li>
+                <li><strong>Original shipping cost</strong> is refunded only if the return is due to our error or a faulty item.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /returns -->
+
+  </div><!-- /tab-content -->
+</div>
+{% endblock %}
