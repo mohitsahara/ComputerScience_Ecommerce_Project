@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}Order Confirmed — TechMart{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 text-center mb-5">
+      <div class="mb-4" style="font-size:5rem;color:var(--success)"><i class="bi bi-check-circle-fill"></i></div>
+      <h1 class="fw-800 mb-2">Order Confirmed!</h1>
+      <p class="text-muted fs-5 mb-1">Thank you for shopping with TechMart, <strong>{{ order.first_name }}</strong>!</p>
+      <p class="text-muted">A confirmation has been sent to <strong>{{ order.email }}</strong></p>
+      <div class="d-inline-block bg-light rounded-3 px-4 py-2 mt-2">
+        <span class="text-muted small">Order Number:</span>
+        <span class="fw-800 fs-5 ms-2 text-primary">#{{ order.order_number }}</span>
+      </div>
+    </div>
+
+    <!-- Order Status Progress -->
+    <div class="col-lg-10 mb-5">
+      <div class="d-flex justify-content-between">
+        {% for step_status, step_label, step_icon in status_steps %}
+        <div class="order-status-step {% if order.status == step_status %}active{% elif forloop.first %}completed{% endif %}">
+          <div class="step-icon"><i class="bi bi-{{ step_icon }}"></i></div>
+          <p class="step-label">{{ step_label }}</p>
+        </div>
+        {% empty %}
+        <div class="order-status-step completed"><div class="step-icon"><i class="bi bi-check"></i></div><p class="step-label">Pending</p></div>
+        <div class="order-status-step active"><div class="step-icon"><i class="bi bi-check2-circle"></i></div><p class="step-label">Confirmed</p></div>
+        <div class="order-status-step"><div class="step-icon"><i class="bi bi-gear"></i></div><p class="step-label">Processing</p></div>
+        <div class="order-status-step"><div class="step-icon"><i class="bi bi-truck"></i></div><p class="step-label">Shipped</p></div>
+        <div class="order-status-step"><div class="step-icon"><i class="bi bi-house-check"></i></div><p class="step-label">Delivered</p></div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Order Details -->
+    <div class="col-lg-10">
+      <div class="row g-4">
+        <div class="col-md-8">
+          <div class="profile-card">
+            <h5 class="fw-700 mb-3">Order Items</h5>
+            {% for item in order.items.all %}
+            <div class="d-flex align-items-center gap-3 mb-3 pb-3 border-bottom">
+              <img src="{{ item.product.get_image }}" width="64" height="64" class="rounded-2" style="object-fit:cover">
+              <div class="flex-grow-1">
+                <p class="mb-0 fw-600">{{ item.product.name }}</p>
+                <p class="mb-0 text-muted small">Qty: {{ item.quantity }} × £{{ item.price }}</p>
+              </div>
+              <span class="fw-700">£{{ item.total_price }}</span>
+            </div>
+            {% endfor %}
+            <div class="d-flex justify-content-between mt-2">
+              <span class="text-muted">Subtotal</span><span>£{{ order.subtotal }}</span>
+            </div>
+            {% if order.discount_amount > 0 %}
+            <div class="d-flex justify-content-between">
+              <span class="text-success">Discount{% if order.coupon %} ({{ order.coupon.code }}){% endif %}</span>
+              <span class="text-success">-£{{ order.discount_amount }}</span>
+            </div>
+            {% endif %}
+            <div class="d-flex justify-content-between">
+              <span class="text-muted">Shipping</span>
+              <span>{% if order.shipping_cost == 0 %}Free{% else %}£{{ order.shipping_cost }}{% endif %}</span>
+            </div>
+            <div class="d-flex justify-content-between fw-800 fs-5 mt-2 pt-2 border-top">
+              <span>Total</span><span class="text-primary">£{{ order.total }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="profile-card mb-3">
+            <h6 class="fw-700 mb-2"><i class="bi bi-truck me-2 text-primary"></i>Shipping To</h6>
+            <p class="mb-0 text-muted small">{{ order.first_name }} {{ order.last_name }}</p>
+            <p class="mb-0 text-muted small">{{ order.address }}</p>
+            <p class="mb-0 text-muted small">{{ order.city }}, {{ order.postcode }}</p>
+            <p class="mb-0 text-muted small">{{ order.country }}</p>
+          </div>
+          <div class="profile-card">
+            <h6 class="fw-700 mb-2"><i class="bi bi-credit-card me-2 text-primary"></i>Payment</h6>
+            <p class="mb-0 text-muted small">{{ order.get_payment_method_display }}</p>
+            <span class="badge bg-{{ order.get_status_badge }} mt-1">{{ order.get_status_display }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <a href="{% url 'product_list' %}" class="btn btn-primary rounded-pill px-4 me-2">Continue Shopping</a>
+        <a href="{% url 'order_history' %}" class="btn btn-outline-secondary rounded-pill px-4">View All Orders</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block trust_badges %}{% endblock %}
+{% block newsletter %}{% endblock %}
